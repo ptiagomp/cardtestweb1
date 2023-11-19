@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kortin Keskustelu</title>
+    <link rel="stylesheet" href="gameA.css">
+</head>
+<body>
+    <!-- Deck Container -->
+    <div class="deck-container">
+        <div class="deck" id="deck0"></div>
+        <div class="deck" id="deck1"></div>
+        <div class="deck" id="deck2"></div>
+        <div class="deck" id="deck3"></div>
+        <div class="deck" id="deck4"></div>
+        <div class="deck" id="deck5"></div>
+    </div>
+
+    <!-- Dropzone Container -->
+    <div class="dropzone-container">
+        <div class="dropzone" id="dropzone0"></div>
+        <div class="dropzone" id="dropzone1"></div>
+        <div class="dropzone" id="dropzone2"></div>
+        <div class="dropzone" id="dropzone3"></div>
+        <div class="dropzone" id="dropzone4"></div>
+        <div class="dropzone" id="dropzone5"></div>
+    </div>
+
+    <!-- Button Container -->
+    <div class="button-container">
+        <button id="resetBtn">Reset Decks</button>
+        <button id="autoPlaceBtn">Auto Place Cards</button>
+        <button id="flipAllBtn">Flip All Cards</button>
+        <button id="homeBtn" onclick="window.location.href='index.html';">
+            <span class="home-icon">&#8962;</span>
+        </button>
+    </div>
+
+    <!-- Game Info and Players List Container -->
+    <div class="game-info-container">
+        <div class="game-id-section">
+            <div id="gameIdDisplay">Game ID: </div>
+        </div>
+        <ul id="playersList">
+            <p>In Game:</p>
+            <!-- Players will be listed here -->
+        </ul>
+    </div>
+
+    <!-- Script -->
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script src="gameA.js"></script>
+</body>
+</html>
