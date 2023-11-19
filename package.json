@@ -8,8 +8,8 @@
     "start": "node server.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Tiago Martins Pinto",
+  "license": "MIT",
   "dependencies": {
     "express": "^4.18.2",
     "socket.io": "^4.7.2"
@@ -17,7 +17,5 @@
   "engines": {
     "node": "21.2.0"
   },
-  "devDependencies": {},
-  "author": "Tiago Martins Pinto",
-  "license": "MIT"
+  "devDependencies": {}
 }
