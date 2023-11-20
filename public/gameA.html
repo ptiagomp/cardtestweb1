@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="gameA.css">
 </head>
 <body>
+    <!-- Player's Avatar Name Display -->
+    <div class="player-avatar-name">
+        <span id="myUserNameDisplay">Your Avatar: </span>
+    </div>
+
     <!-- Deck Container -->
     <div class="deck-container">
         <div class="deck" id="deck0"></div>
@@ -37,6 +42,8 @@
         </button>
     </div>
 
+<!-- Player List and Game Console Container -->
+<div class="info-console-container">
     <!-- Game Info and Players List Container -->
     <div class="game-info-container">
         <div class="game-id-section">
@@ -47,6 +54,13 @@
             <!-- Players will be listed here -->
         </ul>
     </div>
+
+<!-- Game Console -->
+<div id="gameConsole" class="game-console">
+    <button id="clearConsoleBtn">Clear Log</button>
+    <!-- Log messages will be added here -->
+</div>
+</div>
 
     <!-- Script -->
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>

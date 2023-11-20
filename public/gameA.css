@@ -13,6 +13,14 @@ body {
     padding-top: 100px;
 }
 
+
+/* Player's Avatar Name Display Styles */
+.player-avatar-name {
+    color: white;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
 /* Deck Container Styles */
 .deck-container {
     display: flex;
@@ -167,8 +175,8 @@ button:hover {
 }
 
 .game-info-container, .players-list-container {
-    width: 300px;
-    height: 200px;
+    width: 50%;
+    height: 100%;
     padding: 15px;
     margin-top: 30px;
     border: 1px solid #333;
@@ -216,6 +224,12 @@ button:hover {
     }
 }
 
+#playersList strong {
+    color: rgb(126, 123, 131); /* Or any other color you prefer */
+    margin-right: 5px;
+}
+
+
 .card.initial-animation {
     animation: fallIntoPlace 1s ease-in-out;
 }
@@ -231,3 +245,48 @@ button:hover {
 .deck > .card:nth-child(8) { z-index: 8; top: 14px; left: 14px; }
 .deck > .card:nth-child(9) { z-index: 9; top: 16px; left: 16px; }
 .deck > .card:nth-child(10) { z-index: 10; top: 18px; left: 18px; }
+
+.game-console {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    background-color: #000; /* Optional: to differentiate from the player list */
+}
+
+/* Info and Console Container Styles */
+.info-console-container {
+    display: flex;
+    justify-content: center; /* Center the flex container */
+    align-items: flex-start;
+    width: 60%; /* Adjust the width to bring elements closer */
+    gap: 20px; /* Adjust the gap between elements as needed */
+    margin-top: 20px; /* Add some margin to the top */
+}
+
+.game-info-container, .game-console {
+    flex: 1; /* Both elements take up equal space */
+    padding: 15px;
+    margin-top: 30px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: auto;
+    font-weight: bold;
+    height: 200px; /* Set a fixed height */
+}
+
+.game-console button#clearConsoleBtn {
+    padding: 5px 10px;
+    font-size: 12px;
+    margin-bottom: 10px;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.game-console button#clearConsoleBtn:hover {
+    background-color: #555;
+}

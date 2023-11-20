@@ -2,6 +2,7 @@
 const socket = io();
 let draggedItem = null;
 let isAnyCardFlipped = false;
+let myUserName = '';
 
 // DOM Elements
 const decks = document.querySelectorAll('.deck');
@@ -16,6 +17,42 @@ const deckImages = ["tila-bcard.png", "tilanne-bcard.png", "sattuma-bcard.png", 
 
 function loadRandomWord(deckIndex, card) {
     socket.emit('requestCardText', { deckIndex: deckIndex, cardId: card.id });
+}
+
+// Function to update the player's username display in the UI
+function updateMyUserNameDisplay() {
+    // Assuming you have an element with ID 'myUserNameDisplay' in your HTML
+    const myUserNameDisplay = document.getElementById('myUserNameDisplay');
+    if (myUserNameDisplay) {
+        myUserNameDisplay.textContent = myUserName + ": you";
+    }
+}
+
+// Function to clear the game console log
+// Function to clear the game console log
+function clearGameConsole() {
+    const consoleElement = document.getElementById('gameConsole');
+    while (consoleElement.children.length > 1) {
+        consoleElement.removeChild(consoleElement.lastChild);
+    }
+}
+
+// Function to set up the clear console button
+function setupClearConsoleButton() {
+    const clearConsoleBtn = document.getElementById('clearConsoleBtn');
+    clearConsoleBtn.addEventListener('click', function() {
+        socket.emit('clearLog'); // Emit event to server to clear log
+    });
+}
+
+function updateGameConsole(message) {
+    const consoleElement = document.getElementById('gameConsole');
+    const newMessage = document.createElement('div');
+    newMessage.textContent = message;
+    consoleElement.appendChild(newMessage);
+
+    // Auto-scroll to the bottom of the console
+    consoleElement.scrollTop = consoleElement.scrollHeight;
 }
 
 function createCard(deck, index, cardIndex) {
@@ -170,6 +207,7 @@ function setupGame() {
     createDecks();
     setupDragAndDrop();
     setupButtonHandlers();
+    setupClearConsoleButton();
 }
 
 function updatePlayersList(players) {
@@ -178,14 +216,24 @@ function updatePlayersList(players) {
 
     players.forEach(player => {
         const playerElement = document.createElement('li');
-        playerElement.textContent = player;
+        // Check if this is the current player
+        if (player === myUserName) {
+            playerElement.innerHTML = `${player} <strong> : you</strong>`;
+        } else {
+            playerElement.textContent = player;
+        }
         playersList.appendChild(playerElement);
     });
 }
 
 
 // DOMContentLoaded Event Handler
-document.addEventListener('DOMContentLoaded', setupGame);
+document.addEventListener('DOMContentLoaded', function() {
+    setupGame();
+    setupDragAndDrop();
+    setupButtonHandlers();
+    setupClearConsoleButton(); // Setup the clear console button
+});
 
 // Socket.IO Event Listeners
 socket.on('cardMoved', data => {
@@ -243,6 +291,27 @@ socket.on('resetDecks', (gameId) => {
     isAnyCardFlipped = false;
 });
 
+socket.on('logCleared', () => {
+    clearGameConsole(); // Clear the console when receiving 'logCleared' event
+});
+
 socket.on('updatePlayerList', (players) => {
     updatePlayersList(players);
+});
+
+socket.on('logHistory', (logMessages) => {
+    logMessages.forEach(message => updateGameConsole(message));
+});
+
+socket.on('updateGameConsole', (message) => {
+    updateGameConsole(message);
+});
+
+socket.on('yourUserName', (userName) => {
+    myUserName = userName;
+    updateMyUserNameDisplay();
+});
+
+socket.on('playerConnected', (playerName) => {
+    updateGameConsole(playerName + ' has connected.');
 });
