@@ -18,6 +18,12 @@ function generateGameId() {
     return Date.now().toString(36) + Math.random().toString(36).substr(2);
 }
 
+// Initialize a persistent Game ID
+let currentGameId = generateGameId();
+
+// Object to store texts for each card
+let cardTexts = {};
+
 // Function to generate text for a card
 function generateCardText(deckIndex) {
     try {
@@ -36,8 +42,6 @@ const animalNames = ["Bear", "Fox", "Wolf", "Deer", "Owl", "Hawk", "Rabbit", "Sq
 let nameIndex = 0;
 let players = {}; // Object to store players and their aliases
 
-app.use(express.static('.')); // Serve static files from root directory
-
 io.on('connection', (socket) => {
     const userName = animalNames[nameIndex % animalNames.length];
     nameIndex++;
@@ -45,9 +49,8 @@ io.on('connection', (socket) => {
     console.log(`${userName} connected`);
     io.emit('updatePlayerList', Object.values(players));
 
-    // Send the current or a new Game ID to the newly connected client
-    const gameId = generateGameId(); // Generate a new Game ID or retrieve an existing one
-    io.to(socket.id).emit('resetDecks', gameId);
+    // Send the current Game ID to the newly connected client
+    io.to(socket.id).emit('resetDecks', currentGameId);
     
     socket.on('cardMoved', (data) => {
         console.log(`${userName} moved a card`);
@@ -61,8 +64,8 @@ io.on('connection', (socket) => {
 
     socket.on('resetDecks', () => {
         console.log(`${userName} reset the decks`);
-        const gameId = generateGameId();
-        io.emit('resetDecks', gameId); // Emit the new game ID
+        currentGameId = generateGameId();
+        io.emit('resetDecks', currentGameId);
     });
 
     socket.on('autoPlaceCard', (data) => {
@@ -72,20 +75,20 @@ io.on('connection', (socket) => {
 
     socket.on('flipAllCards', (data) => {
         console.log(`${players[socket.id]} flipped all cards`);
-        socket.broadcast.emit('flipAllCards', data); // Broadcast to all clients except the sender
+        socket.broadcast.emit('flipAllCards', data);
     });
 
     socket.on('requestCardText', (data) => {
-        const text = generateCardText(data.deckIndex);
-        io.to(socket.id).emit('cardText', { cardId: data.cardId, text: text });
-    });
-
-    socket.on('requestCardText', (data) => {
-        const text = generateCardText(data.deckIndex);
-        io.to(socket.id).emit('cardText', { cardId: data.cardId, text: text });
+        let text;
+        if (cardTexts[data.cardId]) {
+            text = cardTexts[data.cardId];
+        } else {
+            text = generateCardText(data.deckIndex);
+            cardTexts[data.cardId] = text;
+        }
+        io.emit('cardText', { cardId: data.cardId, text: text });
     });
     
-
     socket.on('disconnect', () => {
         console.log(`${userName} disconnected`);
         delete players[socket.id];
