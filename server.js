@@ -21,7 +21,7 @@ function generateGameId() {
 // Function to generate text for a card
 function generateCardText(deckIndex) {
     try {
-        const filePath = path.join(__dirname, 'cardstext', deckFiles[deckIndex]);
+        const filePath = path.join(__dirname, 'public/cardstext', deckFiles[deckIndex]);
         const data = fs.readFileSync(filePath, 'utf8');
         const words = data.split('\n');
         const randomWord = words[Math.floor(Math.random() * words.length)].trim();
