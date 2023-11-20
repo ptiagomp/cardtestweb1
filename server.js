@@ -42,10 +42,13 @@ io.on('connection', (socket) => {
     const userName = animalNames[nameIndex % animalNames.length];
     nameIndex++;
     players[socket.id] = userName;
-
     console.log(`${userName} connected`);
     io.emit('updatePlayerList', Object.values(players));
 
+    // Send the current or a new Game ID to the newly connected client
+    const gameId = generateGameId(); // Generate a new Game ID or retrieve an existing one
+    io.to(socket.id).emit('resetDecks', gameId);
+    
     socket.on('cardMoved', (data) => {
         console.log(`${userName} moved a card`);
         io.emit('cardMoved', data);
