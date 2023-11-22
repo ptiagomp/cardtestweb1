@@ -3,6 +3,18 @@ const socket = io();
 let draggedItem = null;
 let isAnyCardFlipped = false;
 let myUserName = '';
+let isSetupDone = false;
+
+// DOMContentLoaded Event Handler
+document.addEventListener('DOMContentLoaded', function() {
+    if (!isSetupDone) {
+        setupGame();
+        setupDragAndDrop();
+        setupButtonHandlers();
+        setupClearConsoleButton(); // Setup the clear console button
+        isSetupDone = true;
+    }
+});
 
 // DOM Elements
 const decks = document.querySelectorAll('.deck');
@@ -226,15 +238,6 @@ function updatePlayersList(players) {
     });
 }
 
-
-// DOMContentLoaded Event Handler
-document.addEventListener('DOMContentLoaded', function() {
-    setupGame();
-    setupDragAndDrop();
-    setupButtonHandlers();
-    setupClearConsoleButton(); // Setup the clear console button
-});
-
 // Socket.IO Event Listeners
 socket.on('cardMoved', data => {
     const card = document.getElementById(data.cardId);
@@ -280,7 +283,9 @@ socket.on('flipAllCards', function(data) {
     });
 });
 
+// Existing 'resetDecks' Event Listener
 socket.on('resetDecks', (gameId) => {
+    console.log('resetDecks event received from server');
     const gameIdDisplay = document.getElementById('gameIdDisplay');
     if (gameIdDisplay) {
         gameIdDisplay.textContent = `Game ID: ${gameId}`;
@@ -289,6 +294,7 @@ socket.on('resetDecks', (gameId) => {
     dropzones.forEach(dropzone => dropzone.innerHTML = '');
     createDecks();
     isAnyCardFlipped = false;
+    // Removed the line that emits 'resetDecks' back to the server
 });
 
 socket.on('logCleared', () => {
