@@ -78,7 +78,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('resetDecks', () => {
-        const logMessage = `${userName} reset the decks`;
+        const logMessage = `${userName} reset the decks-123`;
         gameLog.push(logMessage); // Add to log
         currentGameId = generateGameId();
         io.emit('resetDecks', currentGameId);
