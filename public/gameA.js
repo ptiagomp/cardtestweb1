@@ -9,7 +9,7 @@ let isSetupDone = false;
 document.addEventListener('DOMContentLoaded', function() {
     if (!isSetupDone) {
         setupGame();
-        setupDragAndDrop();
+        //setupDragAndDrop();
         setupButtonHandlers();
         setupClearConsoleButton(); // Setup the clear console button
         isSetupDone = true;
@@ -36,7 +36,7 @@ function updateMyUserNameDisplay() {
     // Assuming you have an element with ID 'myUserNameDisplay' in your HTML
     const myUserNameDisplay = document.getElementById('myUserNameDisplay');
     if (myUserNameDisplay) {
-        myUserNameDisplay.textContent = myUserName + ": you";
+        myUserNameDisplay.textContent = myUserName + ": sinä";
     }
 }
 
@@ -60,7 +60,7 @@ function setupClearConsoleButton() {
 function createCard(deck, index, cardIndex) {
     const card = document.createElement('div');
     card.className = 'card initial-animation';
-    card.draggable = true;
+    card.draggable = false;
     card.id = `deck-${index}-card-${cardIndex}`;
     card.dataset.deck = index;
 
@@ -75,11 +75,11 @@ function createCard(deck, index, cardIndex) {
     card.append(front, back);
     deck.appendChild(card);
 
-    card.addEventListener('dblclick', () => {
-        card.classList.toggle('flip');
-        isAnyCardFlipped = true;
-        socket.emit('flipCard', { cardId: card.id });
-    });
+//    card.addEventListener('dblclick', () => {
+//        card.classList.toggle('flip');
+//        isAnyCardFlipped = true;
+//        socket.emit('flipCard', { cardId: card.id });
+//    });
 
     loadRandomWord(index, card);
 }
@@ -138,6 +138,13 @@ function setupButtonHandlers() {
         dropzones.forEach(dropzone => dropzone.innerHTML = '');
         createDecks();
         isAnyCardFlipped = false;
+            // Request new card texts for all cards
+    decks.forEach((deck, deckIndex) => {
+        for (let cardIndex = 0; cardIndex < 10; cardIndex++) {
+            const cardId = `deck-${deckIndex}-card-${cardIndex}`;
+            socket.emit('requestCardText', { deckIndex: deckIndex, cardId: cardId });
+        }
+    });
         socket.emit('resetDecks');
     });
 
@@ -177,7 +184,7 @@ function setupButtonHandlers() {
         });
     
         if (!cardsInDropzones) {
-            alert("Please first put cards on the dropzone.");
+            alert("Aseta kortit ensin pudotusalueelle!");
             return;
         }
         if (!allCardsFaceSameSide) {
@@ -220,7 +227,7 @@ function updatePlayersList(players) {
         const playerElement = document.createElement('li');
         // Check if this is the current player
         if (player === myUserName) {
-            playerElement.innerHTML = `${player} <strong> : you</strong>`;
+            playerElement.innerHTML = `${player} <strong> : sinä</strong>`;
         } else {
             playerElement.textContent = player;
         }
@@ -278,7 +285,7 @@ socket.on('resetDecks', (gameId) => {
     console.log('resetDecks event received from server');
     const gameIdDisplay = document.getElementById('gameIdDisplay');
     if (gameIdDisplay) {
-        gameIdDisplay.textContent = `Game ID: ${gameId}`;
+        gameIdDisplay.textContent = `Pelin ID: ${gameId}`;
     }
     decks.forEach(deck => deck.innerHTML = '');
     dropzones.forEach(dropzone => dropzone.innerHTML = '');
@@ -299,3 +306,16 @@ socket.on('yourUserName', (userName) => {
     myUserName = userName;
     updateMyUserNameDisplay();
 });
+
+socket.on('newPlayerJoined', () => {
+    // Call the function that handles the reset button click
+    // This function should contain the logic that is executed when the reset button is clicked
+    resetGame();
+});
+
+function resetGame() {
+    // Logic to reset the game
+    // This is similar to what happens when the reset button is clicked
+    console.log('Resetting game due to new player joining');
+    // ... reset logic here ...
+}

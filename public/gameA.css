@@ -275,18 +275,3 @@ button:hover {
     font-weight: bold;
     height: 200px; /* Set a fixed height */
 }
-
-.game-console button#clearConsoleBtn {
-    padding: 5px 10px;
-    font-size: 12px;
-    margin-bottom: 10px;
-    background-color: #444;
-    color: white;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-.game-console button#clearConsoleBtn:hover {
-    background-color: #555;
-}

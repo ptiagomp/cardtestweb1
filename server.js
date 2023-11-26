@@ -13,11 +13,18 @@ const io = socketIo(server);
 app.use(express.static('public'));
 
 // Constants and Global Variables
-const deckFiles = ["tila-cards.txt", "tilanne-cards.txt", "sattuma-cards.txt", "resurssit-cards.txt", "opetusmuoto-cards.txt", "keinotja-oivallukset-cards.txt"];
-const animalNames = ["Bear", "Fox", "Wolf", "Deer", "Owl", "Hawk", "Rabbit", "Squirrel", "Badger", "Moose"];
+const deckFiles = [
+    "tila-cards.txt",
+    "tilanne-cards.txt",
+    "sattuma-cards.txt",
+    "resurssit-cards.txt",
+    "opetusmuoto-cards.txt",
+    "keinotja-oivallukset-cards.txt"
+];
+const animalNames = ["Karhu", "Kettu", "Susi", "Peura", "Pöllö", "Haukka", "Jänis", "Orava", "Mäyrä", "Hirvi"];
 let nameIndex = 0;
 let players = {}; // Object to store players and their aliases
-let currentGameId = generateGameId(); // Initialize a persistent Game ID
+let currentGameId; // Game ID will be set when a player connects
 let cardTexts = {}; // Object to store texts for each card
 let gameLog = []; // Array to store game log messages
 
@@ -40,6 +47,12 @@ function generateCardText(deckIndex) {
 
 // Socket.io Event Handlers
 io.on('connection', (socket) => {
+    console.log(`Current game ID: ${currentGameId}`);
+    // Generate a new game ID only when a new player connects
+    if (!currentGameId) {
+        currentGameId = generateGameId();
+    }
+
     const userName = animalNames[nameIndex % animalNames.length];
     nameIndex++;
     players[socket.id] = userName;
@@ -52,7 +65,7 @@ io.on('connection', (socket) => {
 
     // Update the player list for all clients
     io.emit('updatePlayerList', Object.values(players));
-    io.emit('playerConnected', userName); // Notify all clients
+    io.emit('playerConnected', userName);
 
     // Event: Card Moved
     socket.on('cardMoved', (data) => {
@@ -94,6 +107,8 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         handleDisconnect(socket, userName);
     });
+    // Emit an event to all clients when a new player joins
+    io.emit('newPlayerJoined');
 });
 
 // Event Handler Functions
@@ -113,7 +128,8 @@ function handleResetDecks(socket, userName) {
     const logMessage = `${userName} reset the decks`;
     gameLog.push(logMessage);
     console.log(`resetDecks received from user: ${userName}`);
-    currentGameId = generateGameId();
+    // Clear the card texts to ensure new ones are generated
+    cardTexts = {};
     io.emit('resetDecks', currentGameId);
 }
 
