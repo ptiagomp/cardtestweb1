@@ -57,16 +57,6 @@ function setupClearConsoleButton() {
     });
 }
 
-function updateGameConsole(message) {
-    const consoleElement = document.getElementById('gameConsole');
-    const newMessage = document.createElement('div');
-    newMessage.textContent = message;
-    consoleElement.appendChild(newMessage);
-
-    // Auto-scroll to the bottom of the console
-    consoleElement.scrollTop = consoleElement.scrollHeight;
-}
-
 function createCard(deck, index, cardIndex) {
     const card = document.createElement('div');
     card.className = 'card initial-animation';
@@ -305,19 +295,7 @@ socket.on('updatePlayerList', (players) => {
     updatePlayersList(players);
 });
 
-socket.on('logHistory', (logMessages) => {
-    logMessages.forEach(message => updateGameConsole(message));
-});
-
-socket.on('updateGameConsole', (message) => {
-    updateGameConsole(message);
-});
-
 socket.on('yourUserName', (userName) => {
     myUserName = userName;
     updateMyUserNameDisplay();
-});
-
-socket.on('playerConnected', (playerName) => {
-    updateGameConsole(playerName + ' has connected.');
 });

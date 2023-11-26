@@ -101,14 +101,12 @@ function handleCardMoved(socket, userName, data) {
     const logMessage = `${userName} moved a card`;
     gameLog.push(logMessage);
     io.emit('cardMoved', data);
-    io.emit('updateGameConsole', logMessage);
 }
 
 function handleFlipCard(socket, userName, data) {
     const logMessage = `Card ${data.cardId} was flipped by ${userName}`;
     gameLog.push(logMessage);
     socket.broadcast.emit('flipCard', data);
-    io.emit('updateGameConsole', logMessage);
 }
 
 function handleResetDecks(socket, userName) {
@@ -117,21 +115,18 @@ function handleResetDecks(socket, userName) {
     console.log(`resetDecks received from user: ${userName}`);
     currentGameId = generateGameId();
     io.emit('resetDecks', currentGameId);
-    io.emit('updateGameConsole', logMessage);
 }
 
 function handleAutoPlaceCard(socket, userName, data) {
     const logMessage = `${userName} auto placed a card`;
     gameLog.push(logMessage);
     io.emit('autoPlaceCard', data);
-    io.emit('updateGameConsole', logMessage);
 }
 
 function handleFlipAllCards(socket, userName, data) {
     const logMessage = `${userName} flipped all cards`;
     gameLog.push(logMessage);
     socket.broadcast.emit('flipAllCards', data);
-    io.emit('updateGameConsole', logMessage);
 }
 
 function handleRequestCardText(socket, data) {
