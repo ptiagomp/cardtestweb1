@@ -205,6 +205,24 @@ function setupButtonHandlers() {
         }
     });
 }
+function formatCardText(text) {
+    if (text.length <= 21) return text;
+
+    const words = text.split(' ');
+    let formattedText = '';
+    let currentLine = '';
+
+    words.forEach(word => {
+        if ((currentLine + word).length > 21) {
+            formattedText += currentLine.trim() + '\n'; // Add a line break
+            currentLine = word + ' '; // Start a new line with the current word
+        } else {
+            currentLine += word + ' '; // Add the word to the current line
+        }
+    });
+
+    return formattedText + currentLine.trim(); // Add the last line
+}
 
 // Game Setup and Player Management
 function setupGame() {
@@ -250,7 +268,7 @@ socket.on('cardText', function(data) {
     if (card) {
         const back = card.querySelector('.back');
         if (back) {
-            back.textContent = data.text; // Set the text on the back of the card
+            back.textContent = formatCardText(data.text); // Format the text before setting it
         }
     }
 });
