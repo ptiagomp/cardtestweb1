@@ -7,7 +7,7 @@ body {
     height: 100vh;
     background-color: #1e272e;
     color: black;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
     padding-top: 100px;
@@ -51,7 +51,7 @@ body {
     line-height: 1.2;
     transform-style: preserve-3d;
     transition: transform 0.5s cubic-bezier(0.42, 0, 0.58, 1.0), top 0.5s cubic-bezier(0.42, 0, 0.58, 1.0);
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border: 1px solid #ccc;
@@ -247,7 +247,7 @@ button:hover {
 .deck > .card:nth-child(10) { z-index: 10; top: 18px; left: 18px; }
 
 .game-console {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 14px;
     background-color: #000; /* Optional: to differentiate from the player list */
 }
