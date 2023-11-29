@@ -149,23 +149,26 @@ function setupButtonHandlers() {
     });
 
     autoPlaceBtn.addEventListener('click', () => {
-        if (isAnyCardFlipped) {
-            alert("Please reset the deck if you want to auto place all decks!");
-            return;
-        }
+        let delay = 0; // Initial delay
+        const delayIncrement = 500; // Increment delay for each card (500ms)
+    
         decks.forEach((deck, index) => {
+            const card = deck.querySelector('.card:not(.placed)');
             const dropzone = dropzones[index];
-            if (!dropzone.querySelector('.card')) {
-                const card = deck.querySelector('.card');
-                if (card) {
+            
+            if (card && !dropzone.querySelector('.card')) {
+                setTimeout(() => {
                     dropzone.appendChild(card);
-                    Object.assign(card.style, { position: 'absolute', top: '0', left: '0' });
+                    card.classList.add('placed', 'falling');
+                    setTimeout(() => card.classList.remove('falling'), 1000); // Remove the class after animation
                     socket.emit('autoPlaceCard', { cardId: card.id, dropzoneId: dropzone.id });
-                }
+                }, delay);
+    
+                delay += delayIncrement;
             }
         });
     });
-
+    
     flipAllBtn.addEventListener('click', () => {
         let cardsInDropzones = false;
         let allCardsFaceSameSide = true;

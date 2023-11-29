@@ -86,6 +86,7 @@ body {
     font-size: 13px;
     text-align: center;
     box-shadow: 0px 3px 18px 3px rgba(0, 0, 0, 0.2);
+    border-radius: 10px; /* Adjust the radius as needed */
 }
 
 .card .back {
@@ -97,6 +98,7 @@ body {
     overflow: hidden;
     padding: 5px;
     box-shadow: 0px 3px 18px 3px rgba(0, 0, 0, 0.2);
+    border-radius: 10px; /* Adjust the radius as needed */
 }
 
 /* Dropzone Container Styles */
@@ -282,4 +284,14 @@ button:hover {
 .back {
     word-wrap: break-word;
     white-space: normal;
+}
+
+@keyframes fall {
+    0% { transform: translateY(-100px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+.falling {
+    position: absolute;
+    animation: fall 1s ease-in-out forwards;
 }
