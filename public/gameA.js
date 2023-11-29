@@ -25,7 +25,8 @@ const dropzones = document.querySelectorAll('.dropzone');
 
 // Data Definitions
 const colors = ['#FFB6C1', '#87CEEB', '#FFD700', '#98FB98', '#B19CD9', '#FFDAB9'];
-const deckImages = ["tila-bcard.png", "tilanne-bcard.png", "sattuma-bcard.png", "resurssit-bcard.png", "opetusmuoto-bcard.png", "keinot-bcard.png"];
+const deckImages = ["tila-bcard.png", "tilanne-bcard.png", "sattuma-bcard.png", 
+                    "resurssit-bcard.png", "opetusmuoto-bcard.png", "keinot-bcard.png"];
 
 function loadRandomWord(deckIndex, card) {
     socket.emit('requestCardText', { deckIndex: deckIndex, cardId: card.id });
@@ -33,14 +34,12 @@ function loadRandomWord(deckIndex, card) {
 
 // Function to update the player's username display in the UI
 function updateMyUserNameDisplay() {
-    // Assuming you have an element with ID 'myUserNameDisplay' in your HTML
     const myUserNameDisplay = document.getElementById('myUserNameDisplay');
     if (myUserNameDisplay) {
         myUserNameDisplay.textContent = myUserName + ": sinä";
     }
 }
 
-// Function to clear the game console log
 // Function to clear the game console log
 function clearGameConsole() {
     const consoleElement = document.getElementById('gameConsole');
@@ -66,7 +65,8 @@ function createCard(deck, index, cardIndex) {
 
     const front = document.createElement('div');
     front.className = 'front';
-    front.style = `background-image: url('./back_card_imgs/${deckImages[index]}'); background-size: cover; background-color: #939598;`;
+    front.style = `background-image: url('./back_card_imgs/${deckImages[index]}'); 
+                   background-size: cover; background-color: #939598;`;
 
     const back = document.createElement('div');
     back.className = 'back';
@@ -75,11 +75,11 @@ function createCard(deck, index, cardIndex) {
     card.append(front, back);
     deck.appendChild(card);
 
-//    card.addEventListener('dblclick', () => {
-//        card.classList.toggle('flip');
-//        isAnyCardFlipped = true;
-//        socket.emit('flipCard', { cardId: card.id });
-//    });
+    // card.addEventListener('dblclick', () => {
+    //     card.classList.toggle('flip');
+    //     isAnyCardFlipped = true;
+    //     socket.emit('flipCard', { cardId: card.id });
+    // });
 
     loadRandomWord(index, card);
 }
@@ -92,9 +92,9 @@ function createDeck(deck, index) {
 
 function createDecks() {
     decks.forEach(createDeck);
-    setTimeout(() => document.querySelectorAll('.card').forEach(card => card.classList.remove('initial-animation')), 1200);
+    setTimeout(() => document.querySelectorAll('.card').forEach(card => 
+               card.classList.remove('initial-animation')), 1200);
 }
-
 // Drag and Drop Event Handlers
 function setupDragAndDrop() {
     document.addEventListener('dragover', e => {
@@ -111,7 +111,8 @@ function setupDragAndDrop() {
     });
 
     document.addEventListener('drop', e => {
-        if (e.target.classList.contains('dropzone') && !e.target.querySelector('.card') && e.target.dataset.index === draggedItem.dataset.deck) {
+        if (e.target.classList.contains('dropzone') && !e.target.querySelector('.card') && 
+            e.target.dataset.index === draggedItem.dataset.deck) {
             e.target.appendChild(draggedItem);
             Object.assign(draggedItem.style, { position: 'absolute', top: '0', left: '0' });
             socket.emit('cardMoved', { cardId: draggedItem.id, newParentId: e.target.id });
@@ -134,18 +135,29 @@ function setupDragAndDrop() {
 // Button Event Handlers
 function setupButtonHandlers() {
     resetBtn.addEventListener('click', () => {
-        decks.forEach(deck => deck.innerHTML = '');
-        dropzones.forEach(dropzone => dropzone.innerHTML = '');
-        createDecks();
-        isAnyCardFlipped = false;
+        // Apply fade-out effect to all cards in dropzones
+        dropzones.forEach(dropzone => {
+            const cards = dropzone.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.classList.add('fade-out');
+            });
+        });
+    
+        // Wait for the fade-out animation to complete before resetting
+        setTimeout(() => {
+            decks.forEach(deck => deck.innerHTML = '');
+            dropzones.forEach(dropzone => dropzone.innerHTML = '');
+            createDecks();
+            isAnyCardFlipped = false;
             // Request new card texts for all cards
-    decks.forEach((deck, deckIndex) => {
-        for (let cardIndex = 0; cardIndex < 10; cardIndex++) {
-            const cardId = `deck-${deckIndex}-card-${cardIndex}`;
-            socket.emit('requestCardText', { deckIndex: deckIndex, cardId: cardId });
-        }
-    });
-        socket.emit('resetDecks');
+            decks.forEach((deck, deckIndex) => {
+                for (let cardIndex = 0; cardIndex < 10; cardIndex++) {
+                    const cardId = `deck-${deckIndex}-card-${cardIndex}`;
+                    socket.emit('requestCardText', { deckIndex: deckIndex, cardId: cardId });
+                }
+            });
+            socket.emit('resetDecks');
+        }, 500); // The timeout duration should match the CSS animation duration
     });
 
     autoPlaceBtn.addEventListener('click', () => {
@@ -208,6 +220,7 @@ function setupButtonHandlers() {
         }
     });
 }
+
 function formatCardText(text) {
     if (text.length <= 21) return text;
 
@@ -255,7 +268,6 @@ function updatePlayersList(players) {
         playersList.appendChild(playerElement);
     });
 }
-
 // Socket.IO Event Listeners
 socket.on('cardMoved', data => {
     const card = document.getElementById(data.cardId);
