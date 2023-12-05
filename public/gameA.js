@@ -384,32 +384,45 @@ document.getElementById('backgroundColorSelector').addEventListener('change', fu
     switch(value) {
         case 'purple':
             document.body.style.background = '#957DAD';
+            document.body.style.filter = 'none';
             break;
         case 'candypink':
             document.body.style.background = '#D291BC';
+            document.body.style.filter = 'none';
             break;
         case 'softplum':
             document.body.style.background = '#A99ABD';
+            document.body.style.filter = 'none';
             break;
         case 'softlavender':
             document.body.style.background = '#E0E3F4';
+            document.body.style.filter = 'none';
             break;
         case 'seagreen':
             document.body.style.background = '#6ABCAF';
+            document.body.style.filter = 'none';
             break;
         case 'ocean':
             document.body.style.background = 'linear-gradient(to right, #2E3192, #1BFFFF)';
+            document.body.style.filter = 'none';
             break;
         case 'bloodorange':
             document.body.style.background = 'linear-gradient(to right, #D4145A, #FBB03B)';
+            document.body.style.filter = 'none';
             break;
         case 'antarctica':
             document.body.style.background = 'linear-gradient(to right, #D8B5FF, #1EAE98)';
+            document.body.style.filter = 'none';
             break;
         case 'dusk':
             document.body.style.background = 'linear-gradient(to right, #C33764, #1D2671)';
+            document.body.style.filter = 'none';
+            break;
+        case 'negative':
+            document.body.style.filter = 'invert(100%)';
             break;
         default:
             document.body.style.background = '#1e272e'; // Default color
+            document.body.style.filter = 'none';
     }
 });
