@@ -24,9 +24,9 @@ const flipAllBtn = document.getElementById('flipAllBtn');
 const dropzones = document.querySelectorAll('.dropzone');
 
 // Data Definitions
-const colors = ['#FFB6C1', '#87CEEB', '#FFD700', '#98FB98', '#B19CD9', '#FFDAB9'];
-const deckImages = ["tila-bcard.png", "tilanne-bcard.png", "sattuma-bcard.png", 
-                    "resurssit-bcard.png", "opetusmuoto-bcard.png", "keinot-bcard.png"];
+const colors = ['#87CEEB', '#FFB6C1','#FFDAB9', '#98FB98', '#B19CD9', '#FFD700'];
+const deckImages = ["tilanne-bcard.png", "tila-bcard.png", "keinot-bcard.png", 
+                    "resurssit-bcard.png", "opetusmuoto-bcard.png", "sattuma-bcard.png"];
 
 function loadRandomWord(deckIndex, card) {
     socket.emit('requestCardText', { deckIndex: deckIndex, cardId: card.id });

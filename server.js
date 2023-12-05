@@ -14,12 +14,12 @@ app.use(express.static('public'));
 
 // Constants and Global Variables
 const deckFiles = [
-    "tila-cards.txt",
     "tilanne-cards.txt",
-    "sattuma-cards.txt",
+    "tila-cards.txt",
+    "keinotja-oivallukset-cards.txt",
     "resurssit-cards.txt",
     "opetusmuoto-cards.txt",
-    "keinotja-oivallukset-cards.txt"
+    "sattuma-cards.txt"
 ];
 const animalNames = ["Karhu", "Kettu", "Susi", "Peura", "Pöllö", "Haukka", "Jänis", "Orava", "Mäyrä", "Hirvi"];
 let nameIndex = 0;
