@@ -75,11 +75,11 @@ function createCard(deck, index, cardIndex) {
     card.append(front, back);
     deck.appendChild(card);
 
-    // card.addEventListener('dblclick', () => {
-    //     card.classList.toggle('flip');
-    //     isAnyCardFlipped = true;
-    //     socket.emit('flipCard', { cardId: card.id });
-    // });
+    card.addEventListener('dblclick', () => {
+    card.classList.toggle('flip');
+    isAnyCardFlipped = true;
+    socket.emit('flipCard', { cardId: card.id });
+    });
 
     loadRandomWord(index, card);
 }

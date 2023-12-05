@@ -333,13 +333,13 @@ button:active::before {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40px; /* Diameter of the circle */
-    height: 40px; /* Diameter of the circle */
+    width: 20px; /* Diameter of the circle */
+    height: 20px; /* Diameter of the circle */
     padding: 0;
     border-radius: 50%; /* Makes the button circular */
     font-size: 24px; /* Size of the icon */
     line-height: 1; /* Adjust line height to center the icon vertically */
-    border: 2px solid #333; /* Border of the button */
+    border: none; /* Border of the button */
     background-color: #fff; /* Background color of the button */
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
@@ -388,7 +388,7 @@ button:active::before {
 
 /* Dropdown Styles */
 #backgroundColorSelector {
-    padding: 5px 10px;
+    padding: 1px 1px;
     border-radius: 5px;
     border: 1px solid #333;
     background-color: #fff;
