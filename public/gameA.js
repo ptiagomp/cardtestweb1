@@ -380,5 +380,36 @@ window.onclick = function(event) {
 }
 
 document.getElementById('backgroundColorSelector').addEventListener('change', function() {
-    document.body.style.backgroundColor = this.value;
+    const value = this.value;
+    switch(value) {
+        case 'purple':
+            document.body.style.background = '#957DAD';
+            break;
+        case 'candypink':
+            document.body.style.background = '#D291BC';
+            break;
+        case 'softplum':
+            document.body.style.background = '#A99ABD';
+            break;
+        case 'softlavender':
+            document.body.style.background = '#E0E3F4';
+            break;
+        case 'seagreen':
+            document.body.style.background = '#6ABCAF';
+            break;
+        case 'ocean':
+            document.body.style.background = 'linear-gradient(to right, #2E3192, #1BFFFF)';
+            break;
+        case 'bloodorange':
+            document.body.style.background = 'linear-gradient(to right, #D4145A, #FBB03B)';
+            break;
+        case 'antarctica':
+            document.body.style.background = 'linear-gradient(to right, #D8B5FF, #1EAE98)';
+            break;
+        case 'dusk':
+            document.body.style.background = 'linear-gradient(to right, #C33764, #1D2671)';
+            break;
+        default:
+            document.body.style.background = '#1e272e'; // Default color
+    }
 });
