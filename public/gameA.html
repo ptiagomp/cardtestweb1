@@ -32,7 +32,7 @@
         <button id="resetBtn" title="Resetoi ja sekoita kortit.">Uudet Kortit</button>
         <button id="autoPlaceBtn" title="Aseta kortit automaattisesti niiden pudotusalueille.">Aseta Kortit</button>
         <button id="flipAllBtn" title="Kääntää kaikki kortit paljastaen niiden sisällön.">Käännä Kortit</button>
-        <button id="homeBtn" title="Palaa päävalikkoon."onclick="window.location.href='index.html';">
+        <button id="homeBtn" title="Palaa päävalikkoon." onclick="window.location.href='index.html';">
             <span class="home-icon">&#8962;</span>
         </button>
         <button id="infoBtn" title="Game Instructions">&#9432;</button> <!-- Info icon -->
@@ -45,17 +45,19 @@
             <option value="#6ABCAF">Sea Green</option>
         </select>
     </div>
+
+    <!-- Info Popup Modal -->
     <div id="infoModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <h3>Game Instructions</h3>
-            <p>the place to write isntructions for this game.</p>
+            <p>The place to write instructions for this game.</p>
             <!-- Add your game instructions here -->
         </div>
     </div>
+
     <!-- Player List and Game Console Container -->
     <div class="info-console-container">
-        <!-- Game Info and Players List Container -->
         <div class="game-info-container">
             <div class="game-id-section">
                 <div id="gameIdDisplay">Pelin ID: </div>
@@ -67,7 +69,7 @@
         </div>
     </div>
 
-    <!-- Script -->
+    <!-- Scripts -->
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
     <script src="gameA.js"></script>
 </body>
