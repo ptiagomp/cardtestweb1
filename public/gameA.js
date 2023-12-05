@@ -9,7 +9,7 @@ let isSetupDone = false;
 document.addEventListener('DOMContentLoaded', function() {
     if (!isSetupDone) {
         setupGame();
-        //setupDragAndDrop();
+        setupDragAndDrop();
         setupButtonHandlers();
         setupClearConsoleButton(); // Setup the clear console button
         isSetupDone = true;
@@ -59,7 +59,7 @@ function setupClearConsoleButton() {
 function createCard(deck, index, cardIndex) {
     const card = document.createElement('div');
     card.className = 'card initial-animation';
-    card.draggable = false;
+    card.draggable = true;
     card.id = `deck-${index}-card-${cardIndex}`;
     card.dataset.deck = index;
 
