@@ -378,3 +378,7 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+
+document.getElementById('backgroundColorSelector').addEventListener('change', function() {
+    document.body.style.backgroundColor = this.value;
+});

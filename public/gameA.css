@@ -362,3 +362,16 @@ button:hover {
     text-decoration: none;
     cursor: pointer;
 }
+
+/* Dropdown Styles */
+#backgroundColorSelector {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+#backgroundColorSelector:hover {
+    background-color: #ddd;
+}
