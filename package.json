@@ -5,7 +5,10 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "dev:api": "node server.js",
+    "dev:client": "npm start",
+    "dev": "npm run dev:api && npm run dev:client"
+  }
   },
   "keywords": [],
   "author": "Tiago Martins Pinto",
