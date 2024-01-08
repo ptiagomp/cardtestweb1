@@ -8,7 +8,6 @@
     "dev:api": "node server.js",
     "dev:client": "npm start",
     "dev": "npm run dev:api && npm run dev:client"
-  }
   },
   "keywords": [],
   "author": "Tiago Martins Pinto",
