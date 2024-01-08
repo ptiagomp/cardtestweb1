@@ -2,10 +2,10 @@
   "name": "cardtestweb1",
   "version": "1.0.0",
   "description": "card game",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "Tiago Martins Pinto",
@@ -15,7 +15,7 @@
     "socket.io": "^4.7.2"
   },
   "engines": {
-    "node": "21.1.0"
+    "node": "16.20.2"
   },
   "devDependencies": {}
 }
